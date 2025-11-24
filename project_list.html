@@ -3,93 +3,121 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>maintenance_テキスト(iframe)</title>
-    
+    <title>information_テキスト(iframe)</title>
     <style>
-        /* bodyのリセット */
+        /*
+         * bodyのoverflow-x: hidden; を削除し、
+         * iframeとして埋め込まれることを想定し、
+         * body自体がスクロールしないように min-height/height を調整
+         */
         body {
+            /* ページ全体の余白をなくす */
             margin: 0;
             padding: 0;
-            /* iframeとして使用する場合、bodyの横スクロールは基本的に不要ですが、
-               .kadou-textで制御するため、ここでの overflow-x: hidden; は省略可能です。
-               ただし、元のコードの意図を尊重し残しても問題ありませんが、今回は削除します。 */
+            /* スクロールバーが表示されるように、X方向のoverflow制限を削除 */
+            /* overflow-x: hidden; は削除 */
         }
 
         .kadou-text {
             width: 100%;
-            /* 修正点1: 固定の高さ(1000px)を削除、または min-height: 100%; に変更し、内容に合わせて伸縮できるようにします。*/
-            /* iframeの高さは親側で調整することが多いため、ここでは最小限の高さのみ指定。 */
-            min-height: 100px;
+            /* 修正点 1: heightを auto に変更（親要素に合わせて自動調整）*/
+            /* iframeの高さは contentに合わせて自動調整されるべき */
+            /* または、固定で高さを持ちたい場合は適宜調整 */
+            min-height: 100%; /* コンテンツが少ない場合の最小高さを設定 */
+            
+            /* 修正点 2: コンテンツが多い場合にスクロールバーを表示させる */
+            /* overflow: hidden; を削除または auto に変更 */
+            overflow-y: auto; 
             
             padding: 10px;
             background: #f4f4f4;
             font-size: 13px;
-            box-sizing: border-box; /* paddingを含めて幅100%を維持 */
-            
-            /* 修正点2: スクロールを有効化。overflow: hidden; から overflow-y: auto; に変更 */
-            overflow-y: auto;
-            overflow-x: hidden;
+            /* 修正点 3: ボックスサイズをborderやpaddingを含める設定にする */
+            box-sizing: border-box; 
         }
 
-        /* 見出しのスタイル */
-        .section-title {
-            font-weight: bold;
-            color: #333;
-            margin: 15px 0 5px 0;
-            padding-bottom: 2px;
-            border-bottom: 1px dashed #ccc;
+        /* pタグのデフォルトの上下マージンをリセット */
+        .kadou-text {
+            margin: 0;
         }
 
-        /* リストのスタイル */
-        ul {
-            padding-left: 20px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-        }
-        
-        li {
-            margin-bottom: 3px;
+        /* 項目間の視認性を高めるためのスタイル（任意） */
+        .kadou-text p {
+             margin-top: 1em;
         }
     </style>
 </head>
 
 <body>
     <div class="kadou-text">
-        
-        <div class="section-title">■ Self-introduction</div>
-        <p>25歳。Web開発歴4年間を経験したエンジニアとして働いております。<br>
-        主にフロントエンド・バックエンドの開発を経験し、現在はセキュリティ関連のプロジェクトに携わっております。<br>
-        新しい技術の習得に意欲的で、チームでの開発やコミュニケーションを大切にしております。</p><br>
-
-        <div class="section-title">■ Skills</div>
-        <p><strong>言語・ツール:</strong> HTML / CSS / JavaScript / VBA / Java / SQL (DB2, Oracle)<br>
-        <strong>その他:</strong> Git / チーム開発 / プロジェクト管理 / ドキュメント作成</p><br>
-        
-        <div class="section-title">■ Development Experience & Projects</div>
+       ■主なプロジェクト経験
+        <br><br>
+        〇半導体製造工程管理システムの機能拡張・運用統一<br>
+        期間: 2024/03 ～ 2025/12<br>
+        使用技術: Java / JavaScript / HTML / VBA / MySQL / DB2 / Linux / Windows 役割: 要件定義～設計～開発～テスト～運用保守<br>
+        内容:
         <ul>
-            <li>基幹システムの設計・開発 (Java, SQL)</li>
-            <li>Webサイトの新規構築・運用 (HTML, CSS, JavaScript)</li>
-            <li>データベース設計・運用 (DB2, Oracle)</li>
-            <li>業務ツールの作成経験 (VBA)</li>
-        </ul><br>
-
-        <div class="section-title">■ My Areas of Interest</div>
+            <li>製造フローや設備レシピなどの基礎情報管理機能を開発</li>
+            <li>特殊条件を安全に管理する「特別作業指示」機能を実装</li>
+            <li>複数拠点で利用されるWebフロントエンドのUI統一</li>
+            <li>VBAツールによる作業自動化、サーバー監視・ログ管理</li>
+        </ul>
+        成果物: 設計書、プログラム、運用マニュアル
+        <br><br><hr>
+        〇産業用情報処理システム開発・制御機器インテグレーション<br>
+        期間: 2023/08 ～ 2024/02 使用技術: C# / ラダープログラム / 図面作成ツール / PLCソフトウェア 役割: 基本設計～詳細設計～試験～保守～機器設定<br>
+        内容:
         <ul>
-            <li>Web Development</li>
-            <li>セキュリティ</li>
-            <li>基幹システム</li>
-            <li>新技術の習得</li>
-        </ul><br>
-        <div class="section-title">🌟 技術者プロフィール</div>
+            <li>システム構成図・配線図などの設計業務</li>
+            <li>PLC制御ロジックのチェック・保守</li>
+            <li>各種センサや認証機器の設定・配線・動作確認</li>
+            <li>現場調査・導入支援、購買案件の技術検討・見積もり支援</li>
+        </ul>
+        成果物: 設計書、テストデータ、操作マニュアル
+        <br><br><hr>
+        〇車載用半導体チップの信頼性試験・生産管理ツール開発<br>
+        期間: 2022/10 ～ 2023/07 使用技術: VBA / Windows 役割: 試験運用～データ集計～ツール開発<br>
+        内容:
         <ul>
-            <p>保有資格</p>
-            <li>普通自動車免許 (2018年取得)</li>
-            <li>普通自動二輪免許 (2019年取得)</li>
-            <li>職長・安全衛生責任者教育 修了 (2023年)</li>
+            <li>高温負荷試験(バーンイン)の異常記録・データ集計</li>
+            <li>出荷管理データの作成・納品管理</li>
+            <li>異常履歴チェックツールや生産履歴管理シートの自動化ツール開発</li>
+        </ul>
+        成果物: VBAプログラム、仕様書、テストデータ
+        <br><br><hr>
+        〇車載システム開発におけるMBDプロセス管理・規格策定<br>
+        期間: 2022/07 ～ 2022/10 使用技術: C言語 / SPICE / VBA 役割: プロセス管理～ドキュメント管理～標準化支援<br>
+        内容:
+        <ul>
+            <li>開発規定・成果物フォーマットの策定・維持管理</li>
+            <li>仕様変更依頼に基づく設計書・仕様書の修正</li>
+            <li>VBAによるドキュメント編集作業の自動化</li>
+        </ul>
+        成果物: 標準書、改訂版仕様書、支援ツール
+        <br><br><hr>
+        〇ネットワークシステム運用監視・テクニカルサポート<br>
+        期間: 2022/04 ～ 2022/07 使用技術: JP1 / Windows 役割: 運用保守～監視～障害対応～ユーザーサポート<br>
+        内容:
+        <ul>
+            <li>統合監視ツールによるサーバー・ネットワーク機器の死活監視</li>
+            <li>障害発生時のログ確認・一次切り分け</li>
+            <li>ネットワーク設定変更やデータ復旧対応</li>
+            <li>ヘルプデスク業務(アカウント管理・問い合わせ対応)</li>
+        </ul>
+        成果物: 運用手順書、障害対応記録
+        <br><br><hr>
+        - 対応可能分野 -
+        <ul>
+            <li>ソフトウェア開発 (Java / C# / VBA / C言語)</li>
+            <li>制御システム設計・PLCプログラミング</li>
+            <li>半導体製造関連システム開発・試験運用</li>
+            <li>ネットワーク運用監視・テクニカルサポート</li>
+            <li>業務効率化ツール開発 (Excel VBA 等)</li>
         </ul>
     </div>
 </body>
+
 </html>
