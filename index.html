@@ -2,774 +2,664 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=11">
-  <meta http-equiv="Cache-Control" content="no-cache">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>My-website</title>
-  <link rel="icon" href="favicon.ico">
-  <script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>My-website</title>
+    <link rel="icon" href="favicon.ico">
 
-    window.onload = function () {
-      var nav = document.getElementById('nav-wrapper');
-      var hamburger = document.getElementById('js-hamburger');
-      var blackBg = document.getElementById('js-black-bg');
+    <script>
+        // ハンバーガーメニューの開閉処理
+        window.onload = function () {
+            var nav = document.getElementById('nav-wrapper');
+            var hamburger = document.getElementById('js-hamburger');
+            var blackBg = document.getElementById('js-black-bg');
 
-      hamburger.addEventListener('click', function () {
-        nav.classList.toggle('open');
-      });
-      blackBg.addEventListener('click', function () {
-        nav.classList.remove('open');
-      });
-    };
+            // nav-wrapperが2箇所にあるため、最初の要素を取得
+            var nav = document.querySelectorAll('#nav-wrapper')[0]; 
+            
+            hamburger.addEventListener('click', function () {
+                nav.classList.toggle('open');
+            });
+            blackBg.addEventListener('click', function () {
+                nav.classList.remove('open');
+            });
+        };
 
-    function doReloadNoCache() {
-      window.location.reload(true);
-    }
+        // 自動リロード処理
+        let reload_flag = true;
 
-    window.addEventListener('load', function () {
-      setTimeout(doReloadNoCache, 100000);
-    });
-
-    reload_flag = true;
-
-    window.addEventListener('DOMContentLoaded', function () {
-      const reload_button = document.getElementById('reload_toggle');
-      reload_button.addEventListener('change', reload_toggle_status, false);
-
-      function reload_toggle_status() {
-        if (this.checked) {
-          reload_flag = true;
-          doReloadNoCache();
+        function doReloadNoCache() {
+            if (reload_flag) {
+                window.location.reload();
+            }
         }
-        else {
-          reload_flag = false;
+
+        window.addEventListener('load', function () {
+            // 100秒後に自動リロード
+            setTimeout(function() {
+                // 初回リロードはキャッシュを無視して実行（true）
+                window.location.reload(true);
+            }, 100000); 
+        });
+
+        window.addEventListener('DOMContentLoaded', function () {
+            const reload_button = document.getElementById('reload_toggle');
+            
+            // トグルボタンの状態変更を監視
+            reload_button.addEventListener('change', reload_toggle_status, false);
+
+            function reload_toggle_status() {
+                if (this.checked) {
+                    reload_flag = true;
+                    // ONにした直後にリロードを実行
+                    doReloadNoCache();
+                }
+                else {
+                    reload_flag = false;
+                }
+            }
+        });
+
+    </script>
+    
+    <style>
+        /* -------------------------------------- */
+        /* PC/共通スタイル */
+        /* -------------------------------------- */
+
+        body {
+            font-size: 12px;
+            overflow-x: hidden;
+            padding-top: 0;
         }
-      }
-    });
-
-    function doReloadNoCache() {
-      if (reload_flag) {
-        window.location.reload();
-      }
-    }
-
-  </script>
-  <style>
-    .header {
-      background-size: cover;
-      height: 43px;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      z-index: 10;
-      background-color: slategray;
-    }
-
-    .header h2 {
-      width: 700px;
-      margin-top: 2px;
-      margin-left: 20px;
-      float: left;
-      font-size: 27px;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .sub-menu {
-      font-size: 17px;
-      font-weight: 700;
-      padding: 25px 0 0 0;
-    }
-
-
-    .nav ul {
-      padding: 0;
-      list-style: none;
-    }
-
-    .nav a {
-      color: #333;
-      text-decoration: none;
-    }
-
-    .list {
-      display: flex;
-      justify-content: left;
-      gap: 0px;
-      background-color: slategray;
-      margin-bottom: 10px;
-    }
-
-    .link {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0px;
-      padding: 5px 30px;
-      transition: color .15s;
-    }
-
-    .link:hover,
-    .link:focus-within {
-      color: hotpink;
-    }
-
-    .link-hover::after {
-      content: '\25BC';
-      /* Unicodeエスケープシーケンスに変更 */
-      font-size: 10px;
-      margin-left: 5px;
-      /* 見栄えのため、少しスペースを入れることを推奨します */
-    }
-
-    .dropDown {
-      position: absolute;
-      bottom: 0;
-      display: none;
-      padding: 10px;
-      background-color: #fff;
-      box-shadow: 0px 3px 8px -2px #777;
-      color: initial;
-      transform: translate(0, 100%);
-    }
-
-    .link:hover>.dropDown,
-    .link:focus-within>.dropDown {
-      display: block;
-    }
-
-    .dropDown__list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .dropDown__list img {
-      width: 50px;
-    }
-
-    .dropDown__link {
-      padding: 10px 0 10px 0;
-      transition: color .15s;
-    }
-
-    .dropDown__link:hover,
-    .dropDown__link:focus {
-      color: hotpink;
-    }
-
-    .hamburger {
-      position: absolute;
-      right: 35px;
-      top: 57px;
-      width: 50px;
-      height: 40px;
-      cursor: pointer;
-      z-index: 300;
-    }
-
-    .hamburger__line {
-      position: absolute;
-      width: 50px;
-      height: 3px;
-      right: 0;
-      background-color: #000;
-      transition: all 0.5s;
-    }
-
-    .hamburger__line--1 {
-      top: 1px;
-    }
-
-    .hamburger__line--2 {
-      top: 9px;
-    }
-
-    .hamburger__line--3 {
-      top: 18px;
-    }
-
-    .open .hamburger__line--1 {
-      transform: rotate(-45deg);
-      top: 11px;
-    }
-
-    .open .hamburger__line--2 {
-      opacity: 0;
-    }
-
-    .open .hamburger__line--3 {
-      transform: rotate(45deg);
-      top: 11px;
-    }
-
-
-    .toggle_input {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 5;
-      opacity: 0;
-      cursor: pointer;
-    }
-
-    .toggle_label {
-      width: 75px;
-      height: 35px;
-      background: #aaa;
-      position: relative;
-      left: 75px;
-      display: inline-block;
-      border-radius: 40px;
-      transition: 0.4s;
-      box-sizing: border-box;
-    }
-
-    .toggle_label:after {
-      content: "";
-      position: absolute;
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
-      left: 0;
-      top: 0;
-      z-index: 2;
-      background: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      transition: 0.4s;
-    }
-
-    .toggle_input:checked+.toggle_label {
-      background-color: #4BD865;
-    }
-
-    .toggle_input:checked+.toggle_label:after {
-      left: 40px;
-    }
-
-    .toggle_button {
-      padding-top: 10px;
-      position: relative;
-      width: 75px;
-      height: 35px;
-      margin: auto;
-    }
-
-    .sp-nav {
-      position: fixed;
-      right: -100%;
-      top: 0;
-      width: 20%;
-      height: 100vh;
-      background-color: #fff;
-      transition: all 0.5s;
-      z-index: 200;
-      overflow-y: auto;
-    }
-
-    .sp-nav p {
-      background-color: #f4f4f4;
-      padding: 5px 5px;
-      margin: 20px 5px 0px 10px;
-      border-radius: 5px;
-      border: solid #c8c8c8 3px;
-      width: 133px;
-    }
-
-    .sp-nav b {
-      font-size: 30px;
-      background: #f4f4f4;
-      border: solid #c8c8c8 3px;
-      margin-left: 10%;
-      text-shadow: 2px 2px 0px #00008b;
-    }
-
-    .sp-nav li {
-      font-size: 20px;
-    }
-
-    .open .sp-nav {
-      right: 0;
-    }
-
-    .black-bg {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 5;
-      background-color: #000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.5s;
-      cursor: pointer;
-      z-index: 100;
-    }
-
-    .open .black-bg {
-      opacity: 0.3;
-      visibility: visible;
-    }
-
-    .T {
-      color: black;
-    }
-
-    .o {
-      color: black;
-    }
-
-    .p {
-      color: black;
-    }
-
-    .i {
-      color: black;
-    }
-
-    .c {
-      color: black;
-    }
-
-    .s {
-      color: black;
-    }
-
-
-    .iframe-text {
-      margin: 0 0 0 20px;
-      float: left;
-    }
-
-    .iframe-kadou {
-      margin: 0 0 0 20px;
-      float: left;
-    }
-
-    .login a {
-      line-height: 43px;
-      padding: 0px 25px;
-      display: inline-block;
-    }
-
-    body {
-      font-size: 12px;
-      overflow-x: hidden;
-    }
-
-    .main {
-      background-color: white;
-      height: 1600px;
-    }
-
-    .topicsall p {
-      font-size: 25px;
-      float: left;
-      line-height: 24px;
-      background-color: #f4f4f4;
-      padding: 15px 5px;
-      margin-top: 10px;
-      margin-left: 10px;
-      text-shadow: 3px 2px 0px #333;
-      font-weight: bold;
-      border: solid 2px #c8c8c8;
-      letter-spacing: 2px;
-    }
-
-    .text-bold {
-      font-weight: bold;
-      color: red;
-    }
-
-    .btn {
-      background-color: black;
-      padding: 10px 50px;
-      text-decoration: none;
-      color: white;
-      opacity: 0.6;
-      position: absolute;
-      right: 20px;
-    }
-
-    .btn:hover {
-      opacity: 1;
-    }
-
-    /* .btn2 {
-      background-color: #00008b;
-      padding: 10px 50px;
-      text-decoration: none;
-      color: white;
-      opacity: 0.6;
-      position: absolute;
-      right: 118px;
-    }
-
-    .btn2:hover {
-      opacity: 1;
-    } */
-
-    .knowledge1 {
-      padding: 5px 10px;
-      margin: 10px 0.7% 30px -108px;
-      font-weight: bold;
-      border: solid 3px #c8c8c8;
-      float: left;
-      width: 47%;
-      background-color: #f4f4f4;
-      height: 1100px;
-    }
-
-    .knowledge1 h3 {
-      background-color: slategray;
-      text-align: center;
-      margin: 8px 10px;
-    }
-
-    .knowledge1 a {
-      color: #00008b;
-    }
-
-    .shousai_icon {
-      background-color: #f4f4f4;
-      padding: 2px 20px;
-      border-radius: 5px;
-      border: solid #c8c8c8 1px;
-    }
-
-    .knowledge1 b {
-      color: blue;
-      font-size: 13px;
-      background-color: orange;
-      text-shadow: 1px 1px 0px #333;
-    }
-
-    .knowledge2 {
-      padding: 5px 10px;
-      margin: 10px -10px 30px 0px;
-      font-weight: bold;
-      border: solid 3px #c8c8c8;
-      float: left;
-      width: 47%;
-      background-color: #f4f4f4;
-      height: 1100px;
-    }
-
-    .knowledge2 h3 {
-      color: #483d8b;
-      background-color: slategray;
-      text-align: center;
-      margin: 8px 10px;
-    }
-
-    footer {
-      background-color: #f5fffa;
-      position: sticky;
-      bottom: 20px;
-      height: 170px;
-    }
-
-    .register {
-      padding: 5px 10px;
-      font-weight: bold;
-      border: solid 3px #c8c8c8;
-      background: #f4f4f4;
-      width: 22%;
-      float: left;
-      height: 160px;
-      margin-left: 0.9%;
-    }
-
-    .register h3 {
-      color: #483d8b;
-      background-color: slategray;
-      text-align: center;
-      margin: 8px 10px;
-    }
-
-    .register p {
-      text-align: left;
-      color: black;
-      font-size: 11px;
-      font-weight: normal;
-      text-decoration: underline dashed;
-    }
-
-    .support {
-      padding: 5px 10px;
-      font-weight: bold;
-      border: solid 3px #c8c8c8;
-      background: #f4f4f4;
-      width: 22%;
-      float: left;
-      height: 160px;
-      margin-left: 0.7%;
-    }
-
-    .support h3 {
-      color: #483d8b;
-      background-color: slategray;
-      text-align: center;
-      margin: 8px 10px;
-    }
-
-    .support p {
-      text-align: left;
-    }
-
-    .contact {
-      padding: 5px 10px;
-      font-weight: bold;
-      border: solid 3px #c8c8c8;
-      background: #f4f4f4;
-      width: 47%;
-      float: left;
-      height: 160px;
-      margin-left: 0.7%;
-    }
-
-    .contact h3 {
-      color: #483d8b;
-      background-color: slategray;
-      text-align: center;
-      margin: 8px 10px;
-    }
-
-    .contact p {
-      text-align: left;
-      font-size: 10px;
-      line-height: 12px;
-      margin-top: 15px;
-    }
-
-    .otoiawase {
-      background-color: #f5f5f5;
-    }
-
-    .date {
-      margin-bottom: 20px;
-      margin-left: 40px;
-      color: gray;
-      font-size: 20px;
-      margin-top: 20px;
-    }
-
-    .kinou-releasetext {
-      border: none;
-    }
-
-    .information {
-      border: none;
-    }
-
-    hr {
-      border-width: 0 0 3px;
-      border-style: solid;
-      border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 1"><circle fill="hsla(0, 0%, 65%, 1.0)" cx="1" cy="0.5" r="0.5"/></svg>') 0 0 100% repeat;
-      width: 100%;
-    }
-  </style>
+        
+        /* ヘッダーの固定 */
+        .header {
+            background-size: cover;
+            height: 43px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 10;
+            background-color: slategray;
+        }
+
+        /* ヘッダータイトル（PCサイズ） */
+        .header h2 {
+            width: 700px;
+            margin-top: 2px;
+            margin-left: 20px;
+            float: left;
+            font-size: 27px;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: normal;
+        }
+
+        /* GitHubボタン */
+        .login a {
+            line-height: 43px;
+            padding: 0px 25px;
+            display: inline-block;
+        }
+        .btn {
+            background-color: black;
+            padding: 10px 50px;
+            text-decoration: none;
+            color: white;
+            opacity: 0.6;
+            position: absolute;
+            right: 20px;
+        }
+        .btn:hover { opacity: 1; }
+
+
+        /* PC用ナビゲーション */
+        .sub-menu {
+            font-size: 17px;
+            font-weight: 700;
+            /* 修正済み: 上部のパディングを削除 */
+            padding: 0; 
+            margin-top: 43px; /* Headerの高さ分 */
+        }
+        .nav ul { padding: 0; list-style: none; }
+        .nav a { color: #333; text-decoration: none; }
+
+        .list {
+            display: flex;
+            justify-content: left;
+            gap: 0px;
+            background-color: slategray;
+            /* 修正済み: 下部のマージンを削除 */
+            margin-bottom: 0;
+        }
+
+        .link {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0px;
+            padding: 5px 30px;
+            transition: color .15s;
+        }
+        .link:hover, .link:focus-within { color: hotpink; }
+
+        .link-hover::after {
+            content: '\25BC';
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        /* ドロップダウンメニュー */
+        .dropDown {
+            position: absolute;
+            bottom: 0;
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0px 3px 8px -2px #777;
+            color: initial;
+            transform: translate(0, 100%);
+        }
+
+        .link:hover>.dropDown, .link:focus-within>.dropDown { display: block; }
+        .dropDown__list { display: flex; flex-direction: column; gap: 10px; }
+        .dropDown__link { padding: 10px 0 10px 0; transition: color .15s; }
+        .dropDown__link:hover, .dropDown__link:focus { color: hotpink; }
+
+        /* ハンバーガーメニューアイコン（PCでは非表示） */
+        .hamburger {
+            position: absolute;
+            right: 15px; 
+            top: 5px;
+            width: 40px; 
+            height: 30px;
+            cursor: pointer;
+            z-index: 300;
+            display: none; /* 初期は非表示 */
+        }
+
+        .hamburger__line {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            right: 0;
+            background-color: #000;
+            transition: all 0.5s;
+        }
+
+        .hamburger__line--1 { top: 0px; }
+        .hamburger__line--2 { top: 10px; }
+        .hamburger__line--3 { top: 20px; }
+
+        .open .hamburger__line--1 { transform: rotate(-45deg); top: 13px; }
+        .open .hamburger__line--2 { opacity: 0; }
+        .open .hamburger__line--3 { transform: rotate(45deg); top: 13px; }
+
+        /* SPナビゲーション */
+        .sp-nav {
+            position: fixed;
+            right: -100%;
+            top: 0;
+            width: 300px; 
+            max-width: 80vw;
+            height: 100vh;
+            background-color: #fff;
+            transition: all 0.5s;
+            z-index: 200;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .sp-nav p {
+            background-color: #f4f4f4;
+            padding: 5px;
+            margin: 20px 0 0 0;
+            border-radius: 5px;
+            border: solid #c8c8c8 3px;
+            width: auto;
+            text-align: center;
+        }
+
+        .sp-nav b {
+            display: block;
+            font-size: 24px;
+            background: #f4f4f4;
+            border: solid #c8c8c8 3px;
+            margin: 20px 0 10px 0;
+            padding: 5px;
+            text-align: center;
+            text-shadow: 2px 2px 0px #00008b;
+        }
+
+        .sp-nav ul { padding-left: 20px; }
+        .sp-nav li { font-size: 18px; margin-bottom: 5px; }
+
+        .open .sp-nav { right: 0; }
+
+        /* 背景の黒いオーバーレイ */
+        .black-bg {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 5;
+            background-color: #000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .open .black-bg { opacity: 0.3; visibility: visible; }
+
+        /* Topicsセクション */
+        .topicsall {
+            /* 修正済み: PCでの上部マージンを削除 */
+            margin-top: 0; 
+            overflow: hidden; 
+            padding: 10px;
+        }
+        .topicsall p {
+            font-size: 25px;
+            float: left;
+            line-height: 24px;
+            background-color: #f4f4f4;
+            padding: 15px 5px;
+            margin-top: 10px;
+            margin-left: 10px;
+            text-shadow: 3px 2px 0px #333;
+            font-weight: bold;
+            border: solid 2px #c8c8c8;
+            letter-spacing: 2px;
+        }
+        .iframe-text { margin: 0 0 0 20px; float: left; }
+        .iframe-kadou { margin: 0 0 0 20px; float: left; }
+        
+        
+        /* メインコンテンツエリア */
+        .main {
+            background-color: white;
+            /* 修正: min-heightをautoに変更し、フッターとの余白を削除 */
+            min-height: auto; 
+            padding: 0 10px 10px 10px;
+            overflow: hidden; 
+        }
+        
+        /* knowledge1/2 (PC用: 2カラム) */
+        .knowledge1 {
+            padding: 5px 10px;
+            margin: 10px 0.7% 30px 0.7%;
+            font-weight: bold;
+            border: solid 3px #c8c8c8;
+            float: left;
+            width: 48%; 
+            background-color: #f4f4f4;
+            /* 修正: heightをautoに変更 */
+            height: auto; 
+            min-height: 500px; /* 最小高さを設定 */
+            box-sizing: border-box;
+        }
+
+        .knowledge2 {
+            padding: 5px 10px;
+            margin: 10px 0.7% 30px 0.7%;
+            font-weight: bold;
+            border: solid 3px #c8c8c8;
+            float: left;
+            width: 48%; 
+            background-color: #f4f4f4;
+            /* 修正: heightをautoに変更 */
+            height: auto; 
+            min-height: 500px; /* 最小高さを設定 */
+            box-sizing: border-box;
+        }
+        
+        .knowledge1 h3, .knowledge2 h3 {
+            background-color: slategray;
+            text-align: center;
+            margin: 8px 10px;
+        }
+
+        .knowledge1 b {
+            color: blue;
+            font-size: 13px;
+            background-color: orange;
+            text-shadow: 1px 1px 0px #333;
+        }
+
+        /* フッター */
+        footer {
+            background-color: #f5fffa;
+            position: static;
+            height: auto;
+            padding: 10px;
+            overflow: hidden; 
+        }
+
+        /* フッター内要素 (PC用: 3カラム) */
+        .register, .support, .contact {
+            padding: 5px 10px;
+            font-weight: bold;
+            border: solid 3px #c8c8c8;
+            background: #f4f4f4;
+            float: left;
+            height: 160px;
+            margin-left: 0.7%;
+            box-sizing: border-box;
+        }
+        
+        .register { width: 23%; margin-left: 0.9%; }
+        .support { width: 23%; }
+        .contact { width: 48.7%; }
+
+        .register h3, .support h3, .contact h3 {
+            color: #483d8b;
+            background-color: slategray;
+            text-align: center;
+            margin: 8px 10px;
+        }
+        
+        /* その他スタイル */
+        .shousai_icon { background-color: #f4f4f4; padding: 2px 20px; border-radius: 5px; border: solid #c8c8c8 1px; }
+        .date { margin-bottom: 20px; margin-left: 40px; color: gray; font-size: 20px; margin-top: 20px; }
+        .kinou-releasetext { border: none; }
+        .information { border: none; }
+        hr { border-width: 0 0 3px; border-style: solid; border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 1"><circle fill="hsla(0, 0%, 65%, 1.0)" cx="1" cy="0.5" r="0.5"/></svg>') 0 0 100% repeat; width: 100%; }
+        
+        
+        /* -------------------------------------- */
+        /* 📱 レスポンシブ対応 (画面幅 768px 以下) */
+        /* -------------------------------------- */
+        @media (max-width: 768px) {
+            
+            /* bodyの調整 */
+            body { padding-top: 0; }
+
+            /* ヘッダーの調整 */
+            .header h2 {
+                float: left; 
+                width: calc(100% - 70px); 
+                text-align: left; 
+                margin: 0 0 0 10px; 
+                line-height: 43px;
+                font-size: 20px; 
+            }
+            
+            /* ハンバーガーメニューを表示し、位置を調整 */
+            .hamburger {
+                display: block;
+                position: absolute;
+                right: 10px; 
+                top: 5px; 
+                width: 35px;
+                height: 30px;
+            }
+
+            .login a { display: none; } 
+
+            /* PC用ナビゲーションを非表示 */
+            .sub-menu { display: none; }
+            
+            /* topicsall の開始位置を調整 */
+            .topicsall {
+                margin-top: 0; 
+                padding: 10px;
+            }
+
+            .topicsall p {
+                float: none; 
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            /* iframeを縦積みにし、幅を100%に */
+            .iframe-text, .iframe-kadou {
+                float: none; 
+                width: 100%; 
+                margin: 10px 0; 
+                height: auto; 
+            }
+            
+            .iframe-kadou { height: 50px; }
+
+            /* mainコンテンツの調整 */
+            .main { 
+                /* TopicsとRecords/Projectsの間の隙間を詰めるため、上部のパディングを削除 */
+                padding: 0 10px 10px 10px; 
+                min-height: 1000px; 
+            }
+
+            /* knowledge1とknowledge2を縦に並べる（1カラム） */
+            .knowledge1, .knowledge2 {
+                float: none;
+                width: 100%;
+                margin: 10px 0;
+                height: auto; 
+                min-height: 500px; 
+            }
+
+            .knowledge1 iframe, .knowledge2 iframe { height: 500px; }
+            
+            /* footer内の要素を縦に並べる（1カラム） */
+            .register, .support, .contact {
+                float: none;
+                width: 100%;
+                margin: 10px 0;
+                height: auto;
+            }
+            
+            .contact p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+    </style>
 
 </head>
 
 
 <body>
-  <div class="header">
-    <h2>Welcome to My Portfolio</h2>
-    <div class="login">
-      <a href="https://github.com/" class="btn">GitHub</a>
-      <!-- <a href="https://github.com/" class="btn2">GitHub</a> -->
+    <div class="header">
+        <h2>Welcome to My Portfolio</h2>
+        <div class="login">
+            <a href="https://github.com/" class="btn">GitHub</a>
+        </div>
     </div>
-  </div>
-  <div class="sub-menu">
-    <nav class="nav">
-      <ul class="list">
-        <li class="list__item">
-          <div class="link link-hover" tabindex="0">
-            日常クイック
-            <div class="dropDown">
-              <ul class="dropDown__list">
-                <li class="dropDown__item">
-                  <a href="https://www.youtube.com/" class="dropDown__link">YouTube</a>
+    
+    <div class="sub-menu">
+        <nav class="nav">
+            <ul class="list">
+                <li class="list__item">
+                    <div class="link link-hover" tabindex="0">
+                        日常クイック
+                        <div class="dropDown">
+                            <ul class="dropDown__list">
+                                <li class="dropDown__item">
+                                    <a href="https://www.youtube.com/" class="dropDown__link">YouTube</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://github.com/" class="dropDown__link">GitHub</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://chatgpt.com/c/f1352074-5a34-4833-adf1-f1b18c64bd1c"
+                                        class="dropDown__link">ChatGPT</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://stopwatch.onl.jp/" class="dropDown__link">ストップウォッチ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
-                <li class="dropDown__item">
-                  <a href="https://github.com/" class="dropDown__link">GitHub</a>
+                <li class="list__item">
+                    <div class="link link-hover" tabindex="0">
+                        🧠 学習/ツール
+                        <div class="dropDown">
+                            <ul class="dropDown__list">
+                                <li class="dropDown__item">
+                                    <a href="https://www.colordic.org/" class="dropDown__link">色辞典</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://chatgpt.com/$" class="dropDown__link">ChatGPT</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://www.google.com/search?q=https://gemini.google.com/%24"
+                                        class="dropDown__link">Gemini</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://developer.mozilla.org/ja/" class="dropDown__link">MDN ドキュメント</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
-                <li class="dropDown__item">
-                  <a href="https://chatgpt.com/c/f1352074-5a34-4833-adf1-f1b18c64bd1c"
-                    class="dropDown__link">ChatGPT</a>
                 </li>
-                <li class="dropDown__item">
-                  <a href="https://stopwatch.onl.jp/" class="dropDown__link">ストップウォッチ</a>
+                <li class="list__item">
+                    <div class="link link-hover" tabindex="0">
+                        🚀 Go Quick
+                        <div class="dropDown">
+                            <ul class="dropDown__list">
+                                <li class="dropDown__item">
+                                    <a href="https://www.google.com/search?q=https://transit.yahoo.co.jp/%24"
+                                        class="dropDown__link">乗り換案内内</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://www.google.com/search?q=https://www.google.com/maps%24"
+                                        class="dropDown__link">Googleマップ</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://www.google.com/search?q=https://www.youtube.com/%24"
+                                        class="dropDown__link">YouTube</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li class="list__item">
-          <div class="link link-hover" tabindex="0">
-            🧠 学習/ツール
-            <div class="dropDown">
-              <ul class="dropDown__list">
-                <li class="dropDown__item">
-                  <a href="https://www.colordic.org/" class="dropDown__link">色辞典</a>
+                <li class="list__item">
+                    <div class="link link-hover" tabindex="0">
+                        📰 Daily Info
+                        <div class="dropDown">
+                            <ul class="dropDown__list">
+                                <li class="dropDown__item">
+                                    <a href="https://www.google.com/search?q=https://www.google.com/alerts/manage%24"
+                                        class="dropDown__link">今日のニュース</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://www.google.com/search?q=https://tenki.jp/lite/your-area/%24"
+                                        class="dropDown__link">今日の天気</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
-                <li class="dropDown__item">
-                  <a href="https://chatgpt.com/$" class="dropDown__link">ChatGPT</a>
+                <li class="list__item">
+                    <div class="link link-hover" tabindex="0">
+                        社内リンク・業務システム
+                        <div class="dropDown">
+                            <ul class="dropDown__list">
+                                <li class="dropDown__item">
+                                    <a href="https://outlook.office.com/mail/AAMkADUzYWM0ZWU3LTM0MzktNDM0MS04MDEzLWM3MmRmMGYyNTQ0OQAuAAAAAAB8Fz6G8%2BybS5gkUbUVmO0IAQCo%2FP1kO2xuTbNuPOMh7gwaAAAic4EPAAA%3D/id/AAQkADUzYWM0ZWU3LTM0MzktNDM0MS04MDEzLWM3MmRmMGYyNTQ0OQAQAE8RzNLy50Xwt443vnwLrOY%3D"
+                                        class="dropDown__link">メール</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://technoprojp.udemy.com/?next=%2Forganization%2Fhome%2F"
+                                        class="dropDown__link">Udemy</a>
+                                </li>
+                                <li class="dropDown__item">
+                                    <a href="https://technopro.my.salesforce.com/visualforce/session?url=https%3A%2F%2Ftechnopro.lightning.force.com%2Flightning%2Fpage%2Fhome"
+                                        class="dropDown__link">Salesforce</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </li>
-                <li class="dropDown__item">
-                  <a href="https://www.google.com/search?q=https://gemini.google.com/%24"
-                    class="dropDown__link">Gemini</a>
-                </li>
-                <li class="dropDown__item">
-                  <a href="https://developer.mozilla.org/ja/" class="dropDown__link">MDN ドキュメント</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        </li>
-        <li class="list__item">
-          <div class="link link-hover" tabindex="0">
-            🚀 Go Quick
-            <div class="dropDown">
-              <ul class="dropDown__list">
-                <li class="dropDown__item">
-                  <a href="https://www.google.com/search?q=https://transit.yahoo.co.jp/%24"
-                    class="dropDown__link">乗り換案内内</a>
-                </li>
-                <li class="dropDown__item">
-                  <a href="https://www.google.com/search?q=https://www.google.com/maps%24"
-                    class="dropDown__link">Googleマップ</a>
-                </li>
-                <li class="dropDown__item">
-                  <a href="https://www.google.com/search?q=https://www.youtube.com/%24"
-                    class="dropDown__link">YouTube</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li class="list__item">
-          <div class="link link-hover" tabindex="0">
-            📰 Daily Info
-            <div class="dropDown">
-              <ul class="dropDown__list">
-                <li class="dropDown__item">
-                  <a href="https://www.google.com/search?q=https://www.google.com/alerts/manage%24"
-                    class="dropDown__link">今日のニュース</a>
-                </li>
-                <li class="dropDown__item">
-                  <a href="https://www.google.com/search?q=https://tenki.jp/lite/your-area/%24"
-                    class="dropDown__link">今日の天気</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li class="list__item">
-          <div class="link link-hover" tabindex="0">
-            社内リンク・業務システム
-            <div class="dropDown">
-              <ul class="dropDown__list">
-                <li class="dropDown__item">
-                  <a href="https://outlook.office.com/mail/AAMkADUzYWM0ZWU3LTM0MzktNDM0MS04MDEzLWM3MmRmMGYyNTQ0OQAuAAAAAAB8Fz6G8%2BybS5gkUbUVmO0IAQCo%2FP1kO2xuTbNuPOMh7gwaAAAic4EPAAA%3D/id/AAQkADUzYWM0ZWU3LTM0MzktNDM0MS04MDEzLWM3MmRmMGYyNTQ0OQAQAE8RzNLy50Xwt443vnwLrOY%3D"
-                    class="dropDown__link">メール</a>
-                </li>
-                <li class="dropDown__item">
-                  <a href="https://technoprojp.udemy.com/?next=%2Forganization%2Fhome%2F"
-                    class="dropDown__link">Udemy</a>
-                </li>
-                <li class="dropDown__item">
-                  <a href="https://technopro.my.salesforce.com/visualforce/session?url=https%3A%2F%2Ftechnopro.lightning.force.com%2Flightning%2Fpage%2Fhome"
-                    class="dropDown__link">Salesforce</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </nav>
-  </div>
-  <div id="nav-wrapper" class="nav-wrapper">
-    <div class="hamburger" id="js-hamburger">
-      <span class="hamburger__line hamburger__line--1"></span>
-      <span class="hamburger__line hamburger__line--2"></span>
-      <span class="hamburger__line hamburger__line--3"></span>
+            </ul>
+        </nav>
     </div>
-    <nav class="sp-nav">
-      <p>以下のトグルボタンがONの場合、100秒毎に自動更新を実行します。</p>
-      <div class="toggle_button">
-        <input id="reload_toggle" class="toggle_input" type='checkbox' checked />
-        <label for="reload_toggle" class="toggle_label">
-      </div>
-      <hr>
-      <b>Portfolio-Link</b>
-      <ul>
-        <li><a
-            href="https://rennyawatanabe.github.io/csv-data-search/csv%E3%83%87%E3%83%BC%E3%82%BF%E6%A4%9C%E7%B4%A2%5Bbr%E6%A9%9F%E8%83%BD%E8%BF%BD%E5%8A%A0%5D.html">csvデータ検索</a>
-        </li>
-      </ul>
-      <hr>
-      <input class="date" type="date">
-    </nav>
-    <div class="black-bg" id="js-black-bg"></div>
-  </div>
-  <div>
-    <div class="topicsall">
-      <p><span class="T">T</span><span class="o">o</span><span class="p">p</span><span class="i">i</span><span
-          class="c">c</span><span class="s">s</span></p>
-      <iframe src="./mylatest_topics.html" class="iframe-text" Scrolling="no" height="70px" width=75% frameborder="0"
-        style="border:none"></iframe>
+    
+    <div id="nav-wrapper" class="nav-wrapper">
+        <div class="hamburger" id="js-hamburger">
+            <span class="hamburger__line hamburger__line--1"></span>
+            <span class="hamburger__line hamburger__line--2"></span>
+            <span class="hamburger__line hamburger__line--3"></span>
+        </div>
+        <nav class="sp-nav">
+            <p>以下のトグルボタンがONの場合、100秒毎に自動更新を実行します。</p>
+            <div class="toggle_button">
+                <input id="reload_toggle" class="toggle_input" type='checkbox' checked />
+                <label for="reload_toggle" class="toggle_label"></label>
+            </div>
+            <hr>
+            <b>Portfolio-Link</b>
+            <ul>
+                <li><a
+                        href="https://rennyawatanabe.github.io/csv-data-search/csv%E3%83%87%E3%83%BC%E3%82%BF%E6%A4%9C%E7%B4%A2%5Bbr%E6%A9%9F%E8%83%BD%E8%BF%BD%E5%8A%A0%5D.html">csvデータ検索</a>
+                </li>
+            </ul>
+            <hr>
+            <input class="date" type="date">
+        </nav>
+        <div class="black-bg" id="js-black-bg"></div>
+    </div>
 
-      <iframe src="./System_kadou_icon.html" class="iframe-kadou" Scrolling="no" height=70px width=120px frameborder="0"
-        style="border:none"></iframe>
-    </div>
-  </div>
-  <div class="main">
-    <div class="knowledge1">
-      <h3><a href="./kinourelease.xlsx">【Record/Skill】
-          <span class="shousai_icon">詳細はこちら</span></a></h3>
-      <hr>
-      <b>Record</b>
-      <iframe src="./project_list.html" width=100% height=900px class="kinou-releasetext"></iframe>
-    </div>
-    <div class="knowledge2">
-      <h3>Projects</h3>
-      <hr>
-      <iframe src="./personal_blog_posts.html" class="information" width=100% height=900px></iframe>
-    </div>
-  </div>
-  <footer>
-    <div class="register">
-      <h3>よく使うトラブルシューティング</h3>
-      <hr><br>
-      <li><a href="#" onclick="clickEvent()">GitHub<br></a></li>
-      <p>※Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam modi excepturi vitae laboriosam obcaecati
-        praese
-      </p>
-    </div>
-    <div class="support">
-      <h3>サポート情報</h3>
-      <hr><br>
-      <li><a
-          href="https://www.owndays.com/jp/ja/news/air?utm_source=p-max&utm_medium=google&utm_campaign=promotion_mkv_202411&gad_source=5&gad_campaignid=22385823006&gclid=EAIaIQobChMI7dmriPSTjwMVwGAPAh3S3Bo6EAEYASAAEgJUu_D_BwE">
-          HHKBのキャンペーン情報はこちら</a>
-      </li><br>
-    </div>
-    <div class="contact">
-      <h3>【Contact】</h3>
-      <hr>
-      <p><span class="otoiawase">お問い合わせはこちらからどうぞ<br>
-          Lineの友達追加はClick
-      </p>
-      <a href="https://line.me/ti/p/cUt8yTbeiL">友達追加</a>
+    <div>
+        <div class="topicsall">
+            <p><span class="T">T</span><span class="o">o</span><span class="p">p</span><span class="i">i</span><span
+                    class="c">c</span><span class="s">s</span></p>
+            <iframe src="./mylatest_topics.html" class="iframe-text" Scrolling="no" height="70px" width="75%"
+                frameborder="0" style="border:none"></iframe>
 
+            <iframe src="./System_kadou_icon.html" class="iframe-kadou" Scrolling="no" height="70px" width="120px"
+                frameborder="0" style="border:none"></iframe>
+        </div>
     </div>
-  </footer>
+    
+    <div class="main">
+        <div class="knowledge1">
+            <h3><a href="./kinourelease.xlsx">【Record/Skill】
+                    <span class="shousai_icon">詳細はこちら</span></a></h3>
+            <hr>
+            <b>Record</b>
+            <iframe src="./project_list.html" width="100%" height="900px" class="kinou-releasetext"></iframe>
+        </div>
+        <div class="knowledge2">
+            <h3>Projects</h3>
+            <hr>
+            <iframe src="./personal_blog_posts.html" class="information" width="100%" height="900px"></iframe>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="register">
+            <h3>よく使うトラブルシューティング</h3>
+            <hr><br>
+            <li><a href="#" onclick="clickEvent()">GitHub<br></a></li>
+            <p>※Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam modi excepturi vitae laboriosam obcaecati
+                praese
+            </p>
+        </div>
+        <div class="support">
+            <h3>サポート情報</h3>
+            <hr><br>
+            <li><a
+                    href="https://www.owndays.com/jp/ja/news/air?utm_source=p-max&utm_medium=google&utm_campaign=promotion_mkv_202411&gad_source=5&gad_campaignid=22385823006&gclid=EAIaIQobChMI7dmriPSTjwMVwGAPAh3S3Bo6EAEYASAAEgJUu_D_BwE">
+                    HHKBのキャンペーン情報はこちら</a>
+            </li><br>
+        </div>
+        <div class="contact">
+            <h3>【Contact】</h3>
+            <hr>
+            <p><span class="otoiawase">お問い合わせはこちらからどうぞ<br>
+                    Lineの友達追加はClick
+            </p>
+            <a href="https://line.me/ti/p/cUt8yTbeiL">友達追加</a>
+
+        </div>
+    </footer>
 
 </body>
 
