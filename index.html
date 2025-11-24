@@ -276,8 +276,17 @@
             border: solid 2px #c8c8c8;
             letter-spacing: 2px;
         }
-        .iframe-text { margin: 0 0 0 20px; float: left; }
-        .iframe-kadou { margin: 0 0 0 20px; float: left; }
+        
+        /* iframe-textを左寄せにし、幅を調整 */
+        .iframe-text { 
+            margin: 0 0 0 20px; 
+            float: left; 
+            /* iframe-kadouがなくなったため、widthを100%に近づける */
+            width: calc(100% - 150px); 
+        }
+        
+        /* .iframe-kadouのスタイルは削除されます */
+        /* .iframe-kadou { margin: 0 0 0 20px; float: left; } */
         
         
         /* メインコンテンツエリア */
@@ -417,14 +426,21 @@
             }
 
             /* iframeを縦積みにし、幅を100%に */
-            .iframe-text, .iframe-kadou {
+            /* iframe-kadouを削除したため、iframe-textのスタイルを調整 */
+            .iframe-text {
                 float: none; 
                 width: 100%; 
                 margin: 10px 0; 
-                height: auto; 
+                height: 70px; /* heightを固定値に変更 */
             }
             
-            .iframe-kadou { height: 50px; }
+            /* .iframe-kadouのスタイルは削除されます */
+            /* .iframe-kadou { 
+                float: none; 
+                width: 100%; 
+                margin: 10px 0; 
+                height: 50px; 
+            } */
 
             /* mainコンテンツの調整 */
             .main { 
@@ -613,9 +629,7 @@
             <iframe src="./mylatest_topics.html" class="iframe-text" Scrolling="no" height="70px" width="75%"
                 frameborder="0" style="border:none"></iframe>
 
-            <iframe src="./System_kadou_icon.html" class="iframe-kadou" Scrolling="no" height="70px" width="120px"
-                frameborder="0" style="border:none"></iframe>
-        </div>
+            </div>
     </div>
     
     <div class="main">
