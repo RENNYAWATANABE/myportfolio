@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>maintenance_テキスト(iframe)</title>
+    
+    <style>
+        /* bodyのリセット */
+        body {
+            margin: 0;
+            padding: 0;
+            /* iframeとして使用する場合、bodyの横スクロールは基本的に不要ですが、
+               .kadou-textで制御するため、ここでの overflow-x: hidden; は省略可能です。
+               ただし、元のコードの意図を尊重し残しても問題ありませんが、今回は削除します。 */
+        }
+
+        .kadou-text {
+            width: 100%;
+            /* 修正点1: 固定の高さ(1000px)を削除、または min-height: 100%; に変更し、内容に合わせて伸縮できるようにします。*/
+            /* iframeの高さは親側で調整することが多いため、ここでは最小限の高さのみ指定。 */
+            min-height: 100px;
+            
+            padding: 10px;
+            background: #f4f4f4;
+            font-size: 13px;
+            box-sizing: border-box; /* paddingを含めて幅100%を維持 */
+            
+            /* 修正点2: スクロールを有効化。overflow: hidden; から overflow-y: auto; に変更 */
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* 見出しのスタイル */
+        .section-title {
+            font-weight: bold;
+            color: #333;
+            margin: 15px 0 5px 0;
+            padding-bottom: 2px;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        /* リストのスタイル */
+        ul {
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="kadou-text">
+        
+        <div class="section-title">■ Self-introduction</div>
+        <p>25歳。Web開発歴4年間を経験したエンジニアとして働いております。<br>
+        主にフロントエンド・バックエンドの開発を経験し、現在はセキュリティ関連のプロジェクトに携わっております。<br>
+        新しい技術の習得に意欲的で、チームでの開発やコミュニケーションを大切にしております。</p><br>
+
+        <div class="section-title">■ Skills</div>
+        <p><strong>言語・ツール:</strong> HTML / CSS / JavaScript / VBA / Java / SQL (DB2, Oracle)<br>
+        <strong>その他:</strong> Git / チーム開発 / プロジェクト管理 / ドキュメント作成</p><br>
+        
+        <div class="section-title">■ Development Experience & Projects</div>
+        <ul>
+            <li>基幹システムの設計・開発 (Java, SQL)</li>
+            <li>Webサイトの新規構築・運用 (HTML, CSS, JavaScript)</li>
+            <li>データベース設計・運用 (DB2, Oracle)</li>
+            <li>業務ツールの作成経験 (VBA)</li>
+        </ul><br>
+
+        <div class="section-title">■ My Areas of Interest</div>
+        <ul>
+            <li>Web Development</li>
+            <li>セキュリティ</li>
+            <li>基幹システム</li>
+            <li>新技術の習得</li>
+        </ul>
+        
+    </div>
+</body>
+</html>
