@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+  <meta http-equiv="X-UA-Compatible" content="IE=11">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>My-website</title>
+  <link rel="icon" href="favicon.ico">
+  <script>
+
+    window.onload = function () {
+      var nav = document.getElementById('nav-wrapper');
+      var hamburger = document.getElementById('js-hamburger');
+      var blackBg = document.getElementById('js-black-bg');
+
+      hamburger.addEventListener('click', function () {
+        nav.classList.toggle('open');
+      });
+      blackBg.addEventListener('click', function () {
+        nav.classList.remove('open');
+      });
+    };
+
+    function doReloadNoCache() {
+      window.location.reload(true);
+    }
+
+    window.addEventListener('load', function () {
+      setTimeout(doReloadNoCache, 100000);
+    });
+
+    reload_flag = true;
+
+    window.addEventListener('DOMContentLoaded', function () {
+      const reload_button = document.getElementById('reload_toggle');
+      reload_button.addEventListener('change', reload_toggle_status, false);
+
+      function reload_toggle_status() {
+        if (this.checked) {
+          reload_flag = true;
+          doReloadNoCache();
+        }
+        else {
+          reload_flag = false;
+        }
+      }
+    });
+
+    function doReloadNoCache() {
+      if (reload_flag) {
+        window.location.reload();
+      }
+    }
+
+  </script>
+  <style>
+    .header {
+      background-size: cover;
+      height: 43px;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 10;
+      background-color: slategray;
+    }
+
+    .header h2 {
+      width: 700px;
+      margin-top: 2px;
+      margin-left: 20px;
+      float: left;
+      font-size: 27px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .sub-menu {
+      font-size: 17px;
+      font-weight: 700;
+      padding: 25px 0 0 0;
+    }
+
+
+    .nav ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .list {
+      display: flex;
+      justify-content: left;
+      gap: 0px;
+      background-color: slategray;
+      margin-bottom: 10px;
+    }
+
+    .link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0px;
+      padding: 5px 30px;
+      transition: color .15s;
+    }
+
+    .link:hover,
+    .link:focus-within {
+      color: hotpink;
+    }
+
+    .link-hover::after {
+      content: '▼';
+      font-size: 10px;
+    }
+
+    .dropDown {
+      position: absolute;
+      bottom: 0;
+      display: none;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0px 3px 8px -2px #777;
+      color: initial;
+      transform: translate(0, 100%);
+    }
+
+    .link:hover>.dropDown,
+    .link:focus-within>.dropDown {
+      display: block;
+    }
+
+    .dropDown__list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dropDown__list img {
+      width: 50px;
+    }
+
+    .dropDown__link {
+      padding: 10px 0 10px 0;
+      transition: color .15s;
+    }
+
+    .dropDown__link:hover,
+    .dropDown__link:focus {
+      color: hotpink;
+    }
+
+    .hamburger {
+      position: absolute;
+      right: 35px;
+      top: 57px;
+      width: 50px;
+      height: 40px;
+      cursor: pointer;
+      z-index: 300;
+    }
+
+    .hamburger__line {
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      right: 0;
+      background-color: #000;
+      transition: all 0.5s;
+    }
+
+    .hamburger__line--1 {
+      top: 1px;
+    }
+
+    .hamburger__line--2 {
+      top: 9px;
+    }
+
+    .hamburger__line--3 {
+      top: 18px;
+    }
+
+    .open .hamburger__line--1 {
+      transform: rotate(-45deg);
+      top: 11px;
+    }
+
+    .open .hamburger__line--2 {
+      opacity: 0;
+    }
+
+    .open .hamburger__line--3 {
+      transform: rotate(45deg);
+      top: 11px;
+    }
+
+
+    .toggle_input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .toggle_label {
+      width: 75px;
+      height: 35px;
+      background: #aaa;
+      position: relative;
+      left: 75px;
+      display: inline-block;
+      border-radius: 40px;
+      transition: 0.4s;
+      box-sizing: border-box;
+    }
+
+    .toggle_label:after {
+      content: "";
+      position: absolute;
+      width: 35px;
+      height: 35px;
+      border-radius: 100%;
+      left: 0;
+      top: 0;
+      z-index: 2;
+      background: #fff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      transition: 0.4s;
+    }
+
+    .toggle_input:checked+.toggle_label {
+      background-color: #4BD865;
+    }
+
+    .toggle_input:checked+.toggle_label:after {
+      left: 40px;
+    }
+
+    .toggle_button {
+      padding-top: 10px;
+      position: relative;
+      width: 75px;
+      height: 35px;
+      margin: auto;
+    }
+
+    .sp-nav {
+      position: fixed;
+      right: -100%;
+      top: 0;
+      width: 20%;
+      height: 100vh;
+      background-color: #fff;
+      transition: all 0.5s;
+      z-index: 200;
+      overflow-y: auto;
+    }
+
+    .sp-nav p {
+      background-color: #f4f4f4;
+      padding: 5px 5px;
+      margin: 20px 5px 0px 10px;
+      border-radius: 5px;
+      border: solid #c8c8c8 3px;
+      width: 133px;
+    }
+
+    .sp-nav b {
+      font-size: 30px;
+      background: #f4f4f4;
+      border: solid #c8c8c8 3px;
+      margin-left: 10%;
+      text-shadow: 2px 2px 0px #00008b;
+    }
+
+    .sp-nav li {
+      font-size: 20px;
+    }
+
+    .open .sp-nav {
+      right: 0;
+    }
+
+    .black-bg {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 5;
+      background-color: #000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s;
+      cursor: pointer;
+      z-index: 100;
+    }
+
+    .open .black-bg {
+      opacity: 0.3;
+      visibility: visible;
+    }
+
+    .T {
+      color: black;
+    }
+
+    .o {
+      color: black;
+    }
+
+    .p {
+      color: black;
+    }
+
+    .i {
+      color: black;
+    }
+
+    .c {
+      color: black;
+    }
+
+    .s {
+      color: black;
+    }
+
+
+    .iframe-text {
+      margin: 0 0 0 20px;
+      float: left;
+    }
+
+    .iframe-kadou {
+      margin: 0 0 0 20px;
+      float: left;
+    }
+
+    .login a {
+      line-height: 43px;
+      padding: 0px 25px;
+      display: inline-block;
+    }
+
+    body {
+      font-size: 12px;
+      overflow-x: hidden;
+    }
+
+    .main {
+      background-color: white;
+      height: 1600px;
+    }
+
+    .topicsall p {
+      font-size: 25px;
+      float: left;
+      line-height: 24px;
+      background-color: #f4f4f4;
+      padding: 15px 5px;
+      margin-top: 10px;
+      margin-left: 10px;
+      text-shadow: 3px 2px 0px #333;
+      font-weight: bold;
+      border: solid 2px #c8c8c8;
+      letter-spacing: 2px;
+    }
+
+    .text-bold {
+      font-weight: bold;
+      color: red;
+    }
+
+    .btn {
+      background-color: black;
+      padding: 10px 50px;
+      text-decoration: none;
+      color: white;
+      opacity: 0.6;
+      position: absolute;
+      right: 20px;
+    }
+
+    .btn:hover {
+      opacity: 1;
+    }
+
+    .btn2 {
+      background-color: #00008b;
+      padding: 10px 50px;
+      text-decoration: none;
+      color: white;
+      opacity: 0.6;
+      position: absolute;
+      right: 118px;
+    }
+
+    .btn2:hover {
+      opacity: 1;
+    }
+
+    .knowledge1 {
+      padding: 5px 10px;
+      margin: 10px 0.7% 30px -108px;
+      font-weight: bold;
+      border: solid 3px #c8c8c8;
+      float: left;
+      width: 47%;
+      background-color: #f4f4f4;
+      height: 1000px;
+    }
+
+    .knowledge1 h3 {
+      background-color: slategray;
+      text-align: center;
+      margin: 8px 10px;
+    }
+
+    .knowledge1 a {
+      color: #00008b;
+    }
+
+    .shousai_icon {
+      background-color: #f4f4f4;
+      padding: 2px 20px;
+      border-radius: 5px;
+      border: solid #c8c8c8 1px;
+    }
+
+    .knowledge1 b {
+      color: blue;
+      font-size: 13px;
+      background-color: orange;
+      text-shadow: 1px 1px 0px #333;
+    }
+
+    .knowledge2 {
+      padding: 5px 10px;
+      margin: 10px -10px 30px 0px;
+      font-weight: bold;
+      border: solid 3px #c8c8c8;
+      float: left;
+      width: 47%;
+      background-color: #f4f4f4;
+      height: 1000px;
+    }
+
+    .knowledge2 h3 {
+      color: #483d8b;
+      background-color: slategray;
+      text-align: center;
+      margin: 8px 10px;
+    }
+
+    footer {
+      background-color: #f5fffa;
+      position: sticky;
+      bottom: 20px;
+      height: 170px;
+    }
+
+    .register {
+      padding: 5px 10px;
+      font-weight: bold;
+      border: solid 3px #c8c8c8;
+      background: #f4f4f4;
+      width: 22%;
+      float: left;
+      height: 160px;
+      margin-left: 0.9%;
+    }
+
+    .register h3 {
+      color: #483d8b;
+      background-color: slategray;
+      text-align: center;
+      margin: 8px 10px;
+    }
+
+    .register p {
+      text-align: left;
+      color: black;
+      font-size: 11px;
+      font-weight: normal;
+      text-decoration: underline dashed;
+    }
+
+    .support {
+      padding: 5px 10px;
+      font-weight: bold;
+      border: solid 3px #c8c8c8;
+      background: #f4f4f4;
+      width: 22%;
+      float: left;
+      height: 160px;
+      margin-left: 0.7%;
+    }
+
+    .support h3 {
+      color: #483d8b;
+      background-color: slategray;
+      text-align: center;
+      margin: 8px 10px;
+    }
+
+    .support p {
+      text-align: left;
+    }
+
+    .contact {
+      padding: 5px 10px;
+      font-weight: bold;
+      border: solid 3px #c8c8c8;
+      background: #f4f4f4;
+      width: 47%;
+      float: left;
+      height: 160px;
+      margin-left: 0.7%;
+    }
+
+    .contact h3 {
+      color: #483d8b;
+      background-color: slategray;
+      text-align: center;
+      margin: 8px 10px;
+    }
+
+    .contact p {
+      text-align: left;
+      font-size: 10px;
+      line-height: 12px;
+      margin-top: 15px;
+    }
+
+    .otoiawase {
+      background-color: #f5f5f5;
+    }
+
+    .date {
+      margin-bottom: 20px;
+      margin-left: 40px;
+      color: gray;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    .kinou-releasetext {
+      border: none;
+    }
+
+    .information {
+      border: none;
+    }
+
+    hr {
+      border-width: 0 0 3px;
+      border-style: solid;
+      border-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 1"><circle fill="hsla(0, 0%, 65%, 1.0)" cx="1" cy="0.5" r="0.5"/></svg>') 0 0 100% repeat;
+      width: 100%;
+    }
+  </style>
+
+</head>
+
+
+<body>
+  <div class="header">
+    <h2>Welcome to My Portfolio</h2>
+    <div class="login">
+      <a href="https://developer.mozilla.org/ja/" class="btn">・MDM</a>
+      <a href="https://github.com/" class="btn2">GitHub</a>
+    </div>
+  </div>
+  <div class="sub-menu">
+    <nav class="nav">
+      <ul class="list">
+        <li class="list__item">
+          <div class="link link-hover" tabindex="0">
+            OftenUse
+            <div class="dropDown">
+              <ul class="dropDown__list">
+                <li class="dropDown__item">
+                  <a href="https://www.youtube.com/"
+                    class="dropDown__link">・YOUTUBE</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://github.com/" class="dropDown__link">・GitHub</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://chatgpt.com/c/f1352074-5a34-4833-adf1-f1b18c64bd1c"
+                    class="dropDown__link">・ChatGPT</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="list__item">
+          <div class="link link-hover" tabindex="0">
+            　　HTML&CSS&JAVASCRIPT
+            <div class="dropDown">
+              <ul class="dropDown__list">
+                <li class="dropDown__item">
+                  <a href="https://www.colordic.org/" class="dropDown__link">・原色大辞典</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://proengineer.internous.co.jp/content/columnfeature/5541"
+                    class="dropDown__link">・インラインフレームについて</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://developer.mozilla.org/ja/" class="dropDown__link">・MDMドキュメント</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        </li>
+        <li class="list__item">
+          <div class="link link-hover" tabindex="0">
+            　　　VSCODE
+            <div class="dropDown">
+              <ul class="dropDown__list">
+                <li class="dropDown__item">
+                  <a href="https://qiita.com/satoru_pripara/items/ebd4c1a53ca44afa3a95"
+                    class="dropDown__link">・VSCodeで文字コードを変える</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://qiita.com/nkserveren26/items/3f3e593f071d59977603" class="dropDown__link">・【VS
+                    Code】JavaScriptのconsole.logをコンソール画面に出力する方法</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="list__item">
+          <div class="link link-hover" tabindex="0">
+            　　　その他Reference
+            <div class="dropDown">
+              <ul class="dropDown__list">
+                <li class="dropDown__item">
+                  <a href="https://wa3.i-3-i.info/" class="dropDown__link">・「分かりそう」で「分からない」でも「分かった」気になれるIT用語辞典</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://stopwatch.onl.jp/" class="dropDown__link">・ストップウォッチ</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://wind-mill.co.jp/iwashiblog/2019/06/stamp-software-clipstamp/"
+                    class="dropDown__link">・クリップスタンプの使い方</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="#" class="dropDown__link">・</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+        <li class="list__item">
+          <div class="link link-hover" tabindex="0">
+            　　　TPE
+            <div class="dropDown">
+              <ul class="dropDown__list">
+                <li class="dropDown__item">
+                  <a href="https://outlook.office.com/mail/AAMkADUzYWM0ZWU3LTM0MzktNDM0MS04MDEzLWM3MmRmMGYyNTQ0OQAuAAAAAAB8Fz6G8%2BybS5gkUbUVmO0IAQCo%2FP1kO2xuTbNuPOMh7gwaAAAic4EPAAA%3D/id/AAQkADUzYWM0ZWU3LTM0MzktNDM0MS04MDEzLWM3MmRmMGYyNTQ0OQAQAE8RzNLy50Xwt443vnwLrOY%3D"
+                    class="dropDown__link">・メール</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://technoprojp.udemy.com/?next=%2Forganization%2Fhome%2F"
+                    class="dropDown__link">・Udemy</a>
+                </li>
+                <li class="dropDown__item">
+                  <a href="https://technopro.my.salesforce.com/visualforce/session?url=https%3A%2F%2Ftechnopro.lightning.force.com%2Flightning%2Fpage%2Fhome"
+                    class="dropDown__link">・Salesforce</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div id="nav-wrapper" class="nav-wrapper">
+    <div class="hamburger" id="js-hamburger">
+      <span class="hamburger__line hamburger__line--1"></span>
+      <span class="hamburger__line hamburger__line--2"></span>
+      <span class="hamburger__line hamburger__line--3"></span>
+    </div>
+    <nav class="sp-nav">
+      <p>下記のトグルボタンがONの場合、100秒毎で自動更新が行われます。</p>
+      <div class="toggle_button">
+        <input id="reload_toggle" class="toggle_input" type='checkbox' checked />
+        <label for="reload_toggle" class="toggle_label">
+      </div>
+      <hr>
+      <b>Link</b>
+      <ul>
+        <li><a href="https://kumipuro.tech/vscode_garbled_text/" #f4f4f4>【ソースコード・ターミナル】VSCodeの文字化け解消方法まとめ</a></li>
+        <li><a href="https://qiita.com/ment_RE/items/806a0f3ed6f141874849">よくある「ホバーしたらドロップダウンメニューを表示するナビゲーション」を駆逐したい</a>
+        </li>
+        <li><a
+            href="https://csshtml.work/css-only-select-slide/#:~:text=CSS%E3%81%A0%E3%81%91%E3%81%A7%E9%81%B8%E6%8A%9E%E3%83%9C%E3%82%BF%E3%83%B3%E4%BB%98%E3%81%8D%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89%E3%82%B7%E3%83%A7%E3%83%BC%201%20%E4%B8%AD%E5%A4%AE%E4%B8%8B%E9%83%A8%E3%81%AB%E9%81%B8%E6%8A%9E%E3%83%9C%E3%82%BF%E3%83%B3%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%80%81%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%99%E3%82%8B%E3%81%A8%E7%94%BB%E5%83%8F%E3%81%8C%E5%88%87%E3%82%8A%E6%9B%BF%E3%82%8F%E3%82%8B%E3%80%82%202%20%E7%94%BB%E5%83%8F%E3%81%AE%E8%BF%BD%E5%8A%A0%E6%99%82%E3%81%AE%E4%BD%9C%E6%A5%AD%E3%81%AF%E7%94%BB%E5%83%8F%E3%81%AE%E5%8F%82%E7%85%A7%E5%85%88%E6%8C%87%E5%AE%9A%E3%81%AE%E3%81%BF%E3%80%82,%EF%BC%88CSS%E8%AA%BF%E6%95%B4%E3%81%AA%E3%81%A9%E3%81%AA%E3%81%97%EF%BC%89%203%20a%E3%82%BF%E3%82%B0%EF%BC%88%E7%94%BB%E5%83%8F%E3%83%AA%E3%83%B3%E3%82%AF%EF%BC%89%E3%81%82%E3%82%8A%E3%83%BB%E3%81%AA%E3%81%97%E3%80%81%E3%81%A9%E3%81%A3%E3%81%A1%E3%81%A7%E3%82%82%E5%8F%AF%204%20%E8%87%AA%E5%8B%95%E5%86%8D%E7%94%9F%E3%81%AA%E3%81%97">CSSだけで選択ボタン付きスライドショー</a>
+        </li>
+        <li><a href="https://step-learn.com/article/html-css/094-iframe-border.html">iframe 要素の枠線とスクロールバーをなくす方法</a></li>
+        <li><a href="https://oshiete.goo.ne.jp/qa/1840350.html">iframeのスクロールバー：縦だけを表示したい</a></li>
+      </ul>
+      <hr>
+      <input class="date" type="date">
+    </nav>
+    <div class="black-bg" id="js-black-bg"></div>
+  </div>
+  <div>
+    <div class="topicsall">
+      <p><span class="T">T</span><span class="o">o</span><span class="p">p</span><span class="i">i</span><span
+          class="c">c</span><span class="s">s</span></p>
+      <iframe src="C:\Users\Owner\OneDrive\01-Programing\HTML&CSS\toppage\System_topics_text.html" class="iframe-text"
+        Scrolling="no" height="70px" width=75% frameborder="0" style="border:none"></iframe>
+
+      <iframe src="C:\Users\Owner\OneDrive\01-Programing\HTML&CSS\toppage\System_kadou_icon.html" class="iframe-kadou"
+        Scrolling="no" height=70px width=120px frameborder="0" style="border:none"></iframe>
+    </div>
+  </div>
+  <div class="main">
+    <div class="knowledge1">
+      <h3><a href="C:\Users\Owner\OneDrive\01-Programing\HTML&CSS\toppage\kinourelease.xlsx">☆Record/Skill/Project☆
+          <span class="shousai_icon">→詳細はこちら</span></a></h3>
+      <hr>
+      <b>↓　↓　↓</b>
+      <iframe src="C:\Users\Owner\OneDrive\01-Programing\HTML&CSS\toppage\System_maintenance_text.html" width=100%
+        height=700px class="kinou-releasetext"></iframe>
+    </div>
+    <div class="knowledge2">
+      <h3>◇Information◇</h3>
+      <hr>
+      <iframe src="C:\Users\Owner\OneDrive\01-Programing\HTML&CSS\toppage\System_information_text.html"
+        class="information" width=100% height=700px></iframe>
+    </div>
+  </div>
+  <footer>
+    <div class="register">
+      <h3>◇よく使うブラウザ◇</h3>
+      <hr><br>
+      <li><a href="#" onclick="clickEvent()">GitHub<br></a></li>
+      <p>※Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam modi excepturi vitae laboriosam obcaecati
+        praese
+      </p>
+    </div>
+    <div class="support">
+      <h3>◇その他◇</h3>
+      <hr><br>
+      <li><a
+          href="https://www.owndays.com/jp/ja/news/air?utm_source=p-max&utm_medium=google&utm_campaign=promotion_mkv_202411&gad_source=5&gad_campaignid=22385823006&gclid=EAIaIQobChMI7dmriPSTjwMVwGAPAh3S3Bo6EAEYASAAEgJUu_D_BwE">
+          HHKBのペアリング方法を完全解説</a>
+      </li><br>
+    </div>
+    <div class="contact">
+      <h3>◇Contact◇</h3>
+      <hr>
+      <p><span class="otoiawase">■ご連絡があれば、ここにお願い致します。<br>
+          Line追加↓↓Click
+      </p>
+      <a href="https://line.me/ti/p/cUt8yTbeiL">連絡する</a>
+
+    </div>
+  </footer>
+
+</body>
+
+</html>
